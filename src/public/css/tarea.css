@@ -1,0 +1,627 @@
+/** Esta clase del bodi es para formatear todos los estilos*/
+body {
+  background-color: #fffafd;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+/** Estas 2 clases son para ocultar y mostrar tareas*/
+.ocultarTarea {
+  display: none;
+}
+
+.ocultarTarea1 {
+  display: flex;
+  flex-direction: column;
+}
+
+/** Esta media query representa las clase de la vista movil*/
+@media (min-width: 150px) {
+  /** La clase progreso muestra un circulo girando que indica que se esta ejecutando datos */
+  .progreso {
+    margin: auto;
+    display: block;
+    shape-rendering: auto;
+    width: 30px;
+    height: 30px;
+  }
+
+  /** La clase listare es la representa cada tarea agregada, su contenido tiene los botones, tareas y otros, a demas mas abajo de esta clase estas los efectos hover*/
+  .listare {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    background-color: white;
+    height: 60px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #ebd6de;
+    transition: all;
+    transition-duration: 600ms;
+  }
+  .listare:hover {
+    height: 60px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #493b27;
+    box-shadow: 0px 0px 2px 2px #ebd6de;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  /**  Todas estas clase que dicen body li input son las encargadas de mostrar la tarea marcada, pendiente y completada*/
+  body li input[type="text"]:read-only {
+    background: transparent;
+    color: #493b27;
+    pointer-events: none;
+    background-color: white;
+  }
+
+  body li[data-status="completed"] input[type="checkbox"] {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: #e97070;
+    border: 2px solid #493b27;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  body li[data-status="completed"] input[type="checkbox"]:hover {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: #e97070;
+    border: 2px solid #ebd6de;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  body li[data-status="pending"] input[type="checkbox"] {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #f8dcdb;
+    border-radius: 100%;
+    background-color: #f7e8ee;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  body li[data-status="pending"] input[type="checkbox"]:hover {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #493b27;
+    border-radius: 100%;
+    background-color: white;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  body li[data-clase="marcar"] input[type="text"] {
+    text-decoration: line-through;
+    color: #e97070;
+    opacity: 0.9;
+    border: 1px solid #e97070;
+  }
+
+  /** La clase input-contenedor se encarga de maquetar el contenedor donde esta la tarea agregada y el chexbox*/
+  .input-contenedor {
+    display: flex;
+    height: 40px;
+    width: 70%;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  /** La clase input-tarea es la encargada del diseño del input que muestra la tarea*/
+  .input-tarea {
+    border: 1px solid #ebd6de;
+    width: 100%;
+    height: 35px;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 10px;
+    text-align: center;
+    text-transform: capitalize;
+    transition: all;
+    transition-duration: 600ms;
+  }
+  .input-tarea:hover {
+    border: 1px solid #493b27;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  /** La clase btn-contenedore es la encargada de alinear los botones al lado de la tarea que se agrego*/
+  .btn-contenedore {
+    display: flex;
+    justify-content: flex-end;
+    height: 40px;
+    width: 30%;
+  }
+
+  /** La clase circulo es para colocarle un circulo a los botones de eliminar 1 tarea y editar*/
+  .circulos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #ebd6de;
+    color: #493b27;
+    background-color: #f7e8ee;
+    font-size: 18px;
+    transition: all;
+    transition-duration: 600ms;
+  }
+  .circulos:hover {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #493b27;
+    color: #493b27;
+    background-color: white;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  /** La clase circuloEditando es para colocarle un circulo al boton de editar cuando se esta editando y cambia la imagen*/
+  .circulosEditando {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #e3c8d2;
+    color: #f8dcdb;
+    background-color: white;
+    font-size: 18px;
+    transition: all;
+    transition-duration: 600ms;
+  }
+  .circulosEditando:hover {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #493b27;
+    color: #493b27;
+    background-color: white;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  /** La clase borrarTodo es para agregar efectos de transicion a los botones*/
+  .borrarTodo {
+    transition: all;
+    transition-duration: 600ms;
+  }
+  .borrarTodo:hover {
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  /** La clase btn-eliminar-todo es para el boton de eliminar toda la lista de tareas*/
+  .btn-eliminar-todo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #493b27;
+    font-size: 15px;
+    border: 2px solid #ebd6de;
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #f7e8ee;
+    font-weight: 400;
+  }
+  .btn-eliminar-todo:hover {
+    background-color: white;
+    color: #493b27;
+    border: 2px solid #493b27;
+    font-weight: 400;
+    width: 120px;
+    height: 40px;
+  }
+
+  /** La clase btn-paginacion es para los botones de siguiente y anterior de la paginacion*/
+  .btn-paginacion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #493b27;
+    font-size: 15px;
+    border: 2px solid #ebd6de;
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #f7e8ee;
+    font-weight: 400;
+  }
+  .btn-paginacion:hover {
+    background-color: white;
+    color: #493b27;
+    border: 2px solid #493b27;
+    font-weight: 400;
+    width: 120px;
+    height: 40px;
+  }
+
+  /** La clase subModalConfirmar es para mostrar una pantalla modal para confirmar la eliminacion de las tareas*/
+  .subModalConfirmar {
+    margin-left: -300px;
+    transition: all;
+    transition-duration: 1s;
+  }
+
+  /** La clase text, parpadea y parpadeo es para mostrar un texto que parpadea si se hace click fuera de la pantalla modal */
+  .text {
+    font-size: 40px;
+    font-family: helvetica;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .parpadea {
+    animation-name: parpadeo;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-name: parpadeo;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+  }
+
+  @-moz-keyframes parpadeo {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes parpadeo {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes parpadeo {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@media (min-width: 500px) {
+  /** La clase progreso muestra un circulo girando que indica que se esta ejecutando datos */
+  .progreso {
+    margin: auto;
+    display: block;
+    shape-rendering: auto;
+    width: 50px;
+    height: 50px;
+  }
+
+  /** La clase listare es la representa cada tarea agregada, su contenido tiene los botones, tareas y otros, a demas mas abajo de esta clase estas los efectos hover*/
+  .listare {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    height: 70px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #ebd6de;
+    transition: all;
+    transition-duration: 600ms;
+  }
+  .listare:hover {
+    height: 70px;
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #493b27;
+    box-shadow: 0px 0px 2px 2px #ebd6de;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  /** Todas estas clase que dicen body li input son las encargadas de mostrar la tarea marcada, pendiente y completada*/
+  body li input[type="text"]:read-only {
+    background: transparent;
+    color: #493b27;
+    pointer-events: none;
+    background-color: white;
+  }
+
+  body li[data-status="completed"] input[type="checkbox"] {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: #e97070;
+    border: 1px solid #493b27;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
+  }
+  body li[data-status="completed"] input[type="checkbox"]:hover {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: #e97070;
+    border: 2px solid #ebd6de;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  body li[data-status="pending"] input[type="checkbox"] {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #f8dcdb;
+    background-color: #f7e8ee;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  body li[data-status="pending"] input[type="checkbox"]:hover {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #493b27;
+    background-color: white;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  body li[data-clase="marcar"] input[type="text"] {
+    text-decoration: line-through;
+    color: #e97070;
+    opacity: 0.9;
+    border: 1px solid #e97070;
+  }
+
+  /** La clase input-contenedor se encarga de maquetar el contenedor donde esta la tarea agregada y el chexbox*/
+  .input-contenedor {
+    display: flex;
+    height: 40px;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  /** La clase input-tarea es la encargada del diseño del input que muestra la tarea*/
+  .input-tarea {
+    border: 1px solid #ebd6de;
+    width: 100%;
+    height: 40px;
+    font-size: 25px;
+    font-weight: 700;
+    border-radius: 10px;
+    text-align: center;
+    text-transform: capitalize;
+    transition: all;
+    transition-duration: 600ms;
+  }
+  .input-tarea:hover {
+    border: 1px solid #493b27;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  /** La clase btn-contenedore es la encargada de alinear los botones al lado de la tarea que se agrego*/
+  .btn-contenedore {
+    display: flex;
+    justify-content: flex-end;
+    height: 40px;
+    width: 30%;
+  }
+
+  /** La clase circulo es para colocarle un circulo a los botones de eliminar 1 tarea y editar*/
+  .circulos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #ebd6de;
+    color: #493b27;
+    background-color: #f7e8ee;
+    font-size: 18px;
+    transition: all;
+    transition-duration: 600ms;
+  }
+  .circulos:hover {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #493b27;
+    color: #493b27;
+    background-color: white;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  /** La clase circuloEditando es para colocarle un circulo al boton de editar cuando se esta editando y cambia la imagen*/
+  .circulosEditando {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #e3c8d2;
+    color: #f8dcdb;
+    background-color: white;
+    font-size: 18px;
+    transition: all;
+    transition-duration: 600ms;
+  }
+  .circulosEditando:hover {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 2px solid #493b27;
+    color: #493b27;
+    background-color: white;
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  /** La clase borrarTodo es para agregar efectos de transicion a los botones*/
+  .borrarTodo {
+    transition: all;
+    transition-duration: 600ms;
+  }
+  .borrarTodo:hover {
+    transition: all;
+    transition-duration: 600ms;
+  }
+
+  /** La clase btn-eliminar-todo es para el boton de eliminar toda la lista de tareas*/
+  .btn-eliminar-todo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #493b27;
+    font-size: 20px;
+    border: 2px solid #ebd6de;
+    width: 170px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #f7e8ee;
+    font-weight: 400;
+  }
+  .btn-eliminar-todo:hover {
+    background-color: white;
+    color: #493b27;
+    border: 2px solid #493b27;
+    font-weight: 400;
+    width: 170px;
+    height: 40px;
+  }
+
+  /** La clase btn-paginacion es para los botones de siguiente y anterior de la paginacion*/
+  .btn-paginacion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #493b27;
+    font-size: 20px;
+    border: 2px solid #ebd6de;
+    width: 170px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #f7e8ee;
+    font-weight: 400;
+  }
+  .btn-paginacion:hover {
+    background-color: white;
+    color: #493b27;
+    border: 2px solid #493b27;
+    font-weight: 400;
+    width: 170px;
+    height: 40px;
+  }
+
+  /** La clase subModalConfirmar es para mostrar una pantalla modal para confirmar la eliminacion de las tareas*/
+  .subModalConfirmar {
+    margin-left: -300px;
+    transition: all;
+    transition-duration: 1s;
+  }
+
+  /** La clase text, parpadea y parpadeo es para mostrar un texto que parpadea si se hace click fuera de la pantalla modal */
+  .text {
+    font-size: 40px;
+    font-family: helvetica;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .parpadea {
+    animation-name: parpadeo;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-name: parpadeo;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+  }
+
+  @-moz-keyframes parpadeo {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes parpadeo {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes parpadeo {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

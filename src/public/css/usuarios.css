@@ -1,0 +1,168 @@
+/** La clase body es para formatear los estilos por defecto y darle color de fondo */
+body {
+  background-color: #fffafd;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+/** La clase pogreso se encarga de estilo a la barra de progreso cuando se esta
+    ejecutando alguna funcion */
+.progreso {
+  margin: auto;
+  display: block;
+  shape-rendering: auto;
+}
+
+@media (min-width: 150px) {
+  /** La clase mostrarMsjValidacion se encarga del diseño donde se mostraran los
+    mensajes de alerta o error en vista movil */
+  .mostrarMsjValidacion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    width: 100%;
+    color: #d05151;
+    border: 2px solid #493b27;
+    background-color: #fffafd;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    border-radius: 10px;
+  }
+  .mostrarMsjValidacion:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    width: 100%;
+    color: #d05151;
+    border: 2px solid #8f7ad7;
+    background-color: #fffafd;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    border-radius: 10px;
+  }
+
+  /** La clase ocultarMsjValidacion solo oculta los mensajes de alerta o error,
+    en vista movil */
+  .ocultarMsjValidacion {
+    display: none;
+  }
+
+  /** La clase btn-login se encarga del diseño del boton a la hora de registrar al
+    usuario en el sistema en vista movil */
+  .btn-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #edd4f6;
+    font-size: 20px;
+    border: 1px solid #493b27;
+    width: 170px;
+    height: 40px;
+    border-radius: 20px;
+    background: #ebd6de;
+    background: linear-gradient(to left, #e79c87 0%, #c691c2 40%, #8f7ad7 100%);
+    font-weight: 400;
+    transition: all;
+    transition-duration: 400ms;
+  }
+  .btn-login:hover {
+    background-color: white;
+    color: #493b27;
+    border: 2px solid #8f7ad7;
+    font-weight: 400;
+    width: 170px;
+    height: 40px;
+    transition: all;
+    transition-duration: 400ms;
+  }
+}
+
+@media (min-width: 500px) {
+  /** La clase mostrarMsjValidacion se encarga del diseño donde se mostraran los
+    mensajes de alerta o error en vista pc */
+  .mostrarMsjValidacion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    width: 100%;
+    color: #d05151;
+    border: 2px solid #493b27;
+    background-color: #fffafd;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    border-radius: 10px;
+  }
+  .mostrarMsjValidacion:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    width: 100%;
+    color: #d05151;
+    border: 2px solid #8f7ad7;
+    background-color: #fffafd;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    border-radius: 10px;
+  }
+
+  /** La clase ocultarMsjValidacion solo oculta los mensajes de alerta o error,
+    en vista pc*/
+  .ocultarMsjValidacion {
+    display: none;
+  }
+
+  /** La clase btn-login se encarga del diseño del boton a la hora de registrar al
+    usuario en el sistema en vista pc */
+  .btn-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #edd4f6;
+    font-size: 20px;
+    border: 1px solid #493b27;
+    width: 170px;
+    height: 40px;
+    border-radius: 20px;
+    background: #ebd6de;
+    background: linear-gradient(to left, #e79c87 0%, #c691c2 40%, #8f7ad7 100%);
+    font-weight: 400;
+    transition: all;
+    transition-duration: 400ms;
+  }
+  .btn-login:hover {
+    background-color: white;
+    color: #493b27;
+    border: 2px solid #8f7ad7;
+    font-weight: 400;
+    width: 170px;
+    height: 40px;
+    transition: all;
+    transition-duration: 400ms;
+  }
+
+  /** La clase circulo-login y circulo-login1 se encargan de darle diseño al medio
+    circulo que esta en la vista pc */
+  .circulo-login {
+    padding: 20px;
+    box-shadow: 0px 0px 40px 5px #e28ba8;
+    background: #ebd6de;
+    background: linear-gradient(
+      to bottom,
+      #e79c87 0%,
+      #c691c2 40%,
+      #8f7ad7 100%
+    );
+  }
+  .circulo-login1 {
+    box-shadow: 0px 0px 40px 5px #e28ba8;
+  }
+}

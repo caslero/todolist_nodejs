@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Usuarios</title>
+    <link rel="stylesheet" href="/css/usuarios.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/usuarios.js" defer></script>
+  </head>
+  <body>
+    <section>
+      <div class="w-full md:w-1/2 px-2 sm:px-[10%] md:px-0 md:ps-[10%] flex flex-col justify-center ease-in duration-[600ms]">
+        <h2 class="text-[#8f7ad7] text-center text-2xl mb-10 font-[600]">
+          Registrar Usuario
+        </h2>
+
+        <form method="post" id="registrar">
+
+          <div class="w-full h-10 sm:h-20 mb-10 sm:mb-0 flex flex-col items-center justify-center">
+            <p class="w-full mb-[2px]">Nombre:</p>
+            <div class="w-full border-2 border-[#493b27] flex items-center justify-center bg-white rounded-[5px] hover:border-2 hover:border-[#bb88cb] transition-all ease-in duration-[300ms]">
+              <input id="nombre" name="nombre" type="text" class="w-[95%] outline-none h-[40px] text-[15px] md:text-[20px] placeholder:text-[15px] placeholder:text-[#493b27] hover:placeholder-[#bb88cb] transition-all ease-in duration-[400ms]" placeholder="Ejemplo..." required autofocus/>
+            </div>
+          </div>
+
+          <div class="w-full h-10 sm:h-20 mb-10 sm:mb-0 flex flex-col items-center justify-center">
+            <p class="w-full mb-[2px]">Correo:</p>
+            <div class="w-full border-2 border-[#493b27] flex items-center justify-center bg-white rounded-[5px] hover:border-2 hover:border-[#bb88cb] transition-all ease-in duration-[300ms]">
+              <input id="correo" name="correo" type="email" class="w-[95%] outline-none h-[40px] text-[15px] md:text-[20px] placeholder:text-[15px] placeholder:text-[#493b27] hover:placeholder-[#bb88cb] lowercase transition-all ease-in duration-[400ms]" placeholder="ejemplo@ejemplo.com"/>
+            </div>
+          </div>
+
+          <div class="w-full h-10 sm:h-20 mb-5 sm:mb-0 flex flex-col items-center justify-center">
+            <p class="w-full mb-[2px]">Clave:</p>
+            <div class="w-full border-2 border-[#493b27] flex items-center justify-center bg-white rounded-[5px] hover:border-2 hover:border-[#bb88cb] transition-all ease-in duration-[300ms]">
+              <input id="clave" name="clave" type="password" class="w-[95%] outline-none h-[40px] text-[15px] md:text-[20px] placeholder:text-[15px] placeholder:text-[#493b27] hover:placeholder-[#bb88cb] lowercase transition-all ease-in duration-[400ms]" placeholder="**********"/>
+            </div>
+          </div>
+
+          <div class="w-full h-10 sm:h-20 mb-5 sm:mb-0 flex flex-col items-center justify-center">
+            <p class="w-full mb-[2px]">Repetir Clave:</p>
+            <div class="w-full border-2 border-[#493b27] flex items-center justify-center bg-white rounded-[5px] hover:border-2 hover:border-[#bb88cb] transition-all ease-in duration-[300ms]">
+              <input id="clave2" name="clave2" type="password" class="w-[95%] outline-none h-[40px] text-[15px] md:text-[20px] placeholder:text-[15px] placeholder:text-[#493b27] hover:placeholder-[#bb88cb] lowercase transition-all ease-in duration-[400ms]" placeholder="**********"/>
+            </div>
+          </div>
+
+          <!-- Inicio. Aqui se muestran los msj de error o advertencia al momento de iniciar sesion-->
+          <div id="validar" class="ocultar-validacion ocultarMsjValidacion flex flex-col mt-2 transition-all ease-in duration-[300ms]">
+            
+          </div>
+          <!-- Fin. Aqui se muestran los msj de error o advertencia al momento de iniciar sesion-->
+
+
+          <div class="w-full flex justify-between px-2 my-4 space-x-2">
+            <a href="/" class="text-lg text-blue-500 hover:text-red-500 cursor-pointer" id="regresar">Inicio</a>
+            <a href="/login" class="text-lg text-blue-500 hover:text-red-500 cursor-pointer claveOlvidada" id="claveOlvidada">Login</a>
+          </div>
+
+          <div class="w-full flex justify-center mb-4">
+            <div class="btn-login w-full hover:w-full">
+              <button type="submit">Registrar</button>
+            </div>
+          </div>
+
+        </form>
+        
+        <div id="circuloMovil" class="w-0 md:w-1/2 overflow-hidden transition-all ease-in duration-[600ms]">
+          <div id="circuloCompleto" class="w-[800px] h-full rounded-full circulo-login ms-[40%] sm:ms-[50%] md:ms-[20%] ps-4 md:w-screen flex items-center justify-center">
+            <div class="w-[100%] w-full flex justify-start md:justify-between items-center space-x-4">
+              <div id="mostrarCirculo" class="md:hidden flex quitarMostrarCirculo ponerMostrarCirculo text-3xl font-[400] rounded-[100%] text-[#493b27] border-[1px] border-[#493b27] w-10 h-10 relative cursor-pointer hover:border-2 hover:border-white hover:text-white transition-all ease-in duration-[300ms]">
+                <i id="mostrarOcultarCirculo" class="ri-arrow-left-s-line"></i>
+              </div>
+
+              <div class="w-[50%] text-center text-white sm:ps-10 px-2">
+                <h3 class="text-4xl font-semibold mb-10">Lista de tareas</h3>
+                <p class="indent-4 text-justify">
+                  Si confiesas con tu boca al Señor Jesús, y crees en tu corazón
+                  que Dios le levantó de los muertos, serás salvo. Porque con el
+                  acorazón se cree para justicia, pero con la boca se hace
+                  confesión para salvación. Romanos 9. 9-10
+                </p>
+              </div>
+            </div>
+
+            <div class="w-[50%] flex border-2 border-blue-200"></div>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+  </body>
+</html>
