@@ -23,6 +23,31 @@ rutas.get('/login', (req, res) => {
   res.sendFile(__dirname + process.env.LOGIN_USUARIO); 
 });
 
+rutas.get('/validar/:url', adminUsuarios.validarUsuarioToken, (req, res) => {  
+  res.sendFile(__dirname + process.env.VALIDAR); 
+});
+
+
+
+
+rutas.get('/claves', (req, res) => {
+  res.sendFile(__dirname + process.env.CAMBIAR_CLAVE); 
+});
+
+rutas.get('/clavesCambiar/:url', adminUsuarios.cambioClaveUsuario, (req, res) => {
+  res.sendFile(__dirname + process.env.CLAVE_CAMBIADA); 
+});
+
+
+rutas.get('/tokenExpiro', (req, res) => {
+  res.sendFile(__dirname + process.env.TOKEN_EXPIRO); 
+});
+
+
+rutas.post('/api/claveCambiada', UsuariosControlador.cambioClaveUsuario)
+
+
+
 //Esta direccion es con el middleware   adminUsuarios.revisarCookie,
 rutas.get('/tareas', adminUsuarios.revisarCookie,  (req, res) => {
   res.sendFile(__dirname + process.env.LISTA_TAREAS)
@@ -30,13 +55,22 @@ rutas.get('/tareas', adminUsuarios.revisarCookie,  (req, res) => {
 
 rutas.get('/tareas/todas/descendentes', tareasControlador.mostrarTodasTareasDescendente)
 rutas.get('/tareas/todas/ascendentes', tareasControlador.mostrarTodasTareasAscendente)
-rutas.get(`/usuario_activo`, tareasControlador.mostrarUsuarioActivo);
+rutas.get('/usuario_activo', tareasControlador.mostrarUsuarioActivo);
 
 rutas.post('/api/tareas', tareasControlador.postGuardarTareas);
 rutas.post('/api/registro', adminUsuarios.usuarioRepetido, UsuariosControlador.postGuardarUsuarios);
-rutas.post('/api/login', LoginControlador.postLogin);
+rutas.post('/api/login', adminUsuarios.usuarioNoRegistrado, LoginControlador.postLogin);
 rutas.post('/api/update-estatus-clase', tareasControlador.actualizarTareaEstatusClase)
 rutas.post('/api/update-tarea', tareasControlador.actualizarTarea)
+rutas.post('/api/cambiar-clave', UsuariosControlador.cambiarClaveUsuario)
+
+
+
+
+rutas.post('/api/cambiar-clave-token', adminUsuarios.confirmarUsuarioExiste, UsuariosControlador.enviarTokenCambiarClave)
+
+
+
 
 rutas.delete('/api/eliminar-individual/id', tareasControlador.eliminarTareaIndividual)
 rutas.delete('/api/eliminar-todas', tareasControlador.eliminarTareaTodas)

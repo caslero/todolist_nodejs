@@ -1,15 +1,20 @@
-import { tareasModelo, UsuariosModelo, LoginModelo } from "../modelo/modelo.js";
+import { tareasModelo, UsuariosModelo, LoginModelo, TokensModelos } from "../modelo/modelo.js";
 import jsonwebtoken from 'jsonwebtoken';
 import bcryptjs from "bcryptjs";
+import { sendMail, sendMailCambiarClave } from "../config/emailer.js";
+import { tokenValidarUsuario } from "./tokenValidadUsuario.js";
+
+export const validarUsuario = tokenValidarUsuario(10);
 
 export class UsuariosControlador {
-    static async postGuardarUsuarios(req, res) { 
+    static async postGuardarUsuarios(req, res) {
         const nombre = req.body.nombre;
         const correo = req.body.correo;  
         const clave = req.body.clave;
         const clave2 = req.body.clave2;
         const encriptado = await bcryptjs.genSalt(5);
         const claveEncriptada = await bcryptjs.hash(clave, encriptado);
+        
 
         if (clave != clave2) {
             return res.status(400).send({
@@ -25,17 +30,124 @@ export class UsuariosControlador {
             })
         }        
        
-        let resultado = await UsuariosModelo.registrarNuevoUsuario(nombre, correo, claveEncriptada);        
+        let resultado = await UsuariosModelo.registrarNuevoUsuario(nombre, correo, claveEncriptada, validarUsuario);        
         
         if (resultado) {
+            sendMail(correo, nombre, validarUsuario);
             return res.status(201).send({
                 status: 'ok',
-                message: `Usuario ${nombre} registrado `, redirect: "/login"
+                message: `Usuario ${nombre} registrado `,
+                redirect: "/login"
             })
         } else {
             return res.status(400).send({
                 status: 'Error',
                 message: "Registro Fallido"
+            })
+        }
+    }
+
+    static async cambiarClaveUsuario(req, res) {
+        const cookieJWT = req.headers.cookie.split('; ').find(cookie => cookie.startsWith('jwt=')).slice(4);
+        const decodificada = jsonwebtoken.verify(cookieJWT, process.env.JWT_SECRET)
+        const correo = decodificada.correo;
+
+        const claveVieja = req.body.claveVieja;
+        const claveNueva = req.body.claveNueva;
+        const claveNuevaConfirmar = req.body.claveNuevaConfirmar;
+
+        const encriptado = await bcryptjs.genSalt(5);
+        let claveEncontrada = '';
+
+        if (!claveVieja || !claveNueva || !claveNuevaConfirmar) {
+            return res.status(400).send({
+                status: "Error",
+                message: "Campos vacios"
+            })
+        }
+
+        if (claveNueva === claveNuevaConfirmar) {
+            //encriptamos la clave nueva
+            const claveEncriptada = await bcryptjs.hash(claveNueva, encriptado);
+
+            let resultadoVerClave = await UsuariosModelo.cambiarClaveUsuario(correo)
+            claveEncontrada = resultadoVerClave[0].clave;
+
+            let comparada = await bcryptjs.compare(claveVieja, claveEncontrada);
+
+            if (comparada) {
+                let resultadoCambiarClave = await UsuariosModelo.claveActualizadaUsuario(claveEncriptada, correo)
+                if (resultadoCambiarClave) {
+                    return res.status(200).send({
+                        status: "Ok",
+                        message: "Clave cambiada"
+                    })
+                }
+            } else {
+                return res.status(400).send({
+                    status: "Error",
+                    message: "Clave incorrecta"
+                })
+            }
+        } else {
+            return res.status(400).send({
+                status: "Error",
+                message: "Claves no coinciden"
+            })
+        }
+    }
+
+    static async enviarTokenCambiarClave(req, res) {
+        const correo = req.body.correo;
+        let resultado = await UsuariosModelo.guardarTokenCambioClave(correo, validarUsuario);
+        let nomUsuario = await UsuariosModelo.nombreUsuario(correo);
+        
+        if (resultado) {            
+            sendMailCambiarClave(correo, nomUsuario[0].nombre, validarUsuario)
+            return res.status(201).send({
+                status: 'ok',
+                message: `Revise su correo`
+            })
+        }
+    }
+
+    static async cambioClaveUsuario(req, res) {
+        const token = req.body.token;
+        const claveN = req.body.claveNueva;
+        const claveNConfirmar = req.body.claveNuevaConfirmar;
+        let id = '';
+
+        if (claveN.length < 5 || claveNConfirmar.length < 5) {
+            return res.status(400).send({
+                status: "Error",
+                message: "Minimo 5 caracteres"
+            })
+        }
+
+        if (!claveN.length  || !claveNConfirmar) {
+            return res.status(400).send({
+                status: "Error",
+                message: "Uno o varios campos vacios"
+            })
+        }
+
+        if (claveN === claveNConfirmar) {            
+            let resultado = await TokensModelos.claveCambiar(token)
+            id = resultado[0].id_usuario;
+            const encriptado = await bcryptjs.genSalt(5);
+            const claveEncriptada = await bcryptjs.hash(claveN, encriptado);
+            let resultado2 = await TokensModelos.claveCambiada(id, claveEncriptada)
+
+            if (resultado2) {
+                return res.status(201).send({
+                    status: "Ok",
+                    message: "Clave cambiada"
+                })
+            }            
+        } else {
+            return res.status(400).send({
+                status: 'error',
+                message: `Claves no coinciden`
             })
         }
     }
@@ -67,51 +179,56 @@ export class LoginControlador {
             })
         }
 
-        try {
-            let resultado = await LoginModelo.modeloValidarClave(correo);
-            let comparada = await bcryptjs.compare(clave, resultado);
+        let authUsuario = await LoginModelo.autorizarUsuario(correo);
 
-            if (!resultado) {
-                return res.status(400).send({
-                    status: "Error",
-                    message: "Correo no existe"
-                })
-            } else {
-                if (comparada) {
-                    const token = jsonwebtoken.sign({ correo:correo },
-                        process.env.JWT_SECRET, {
-                        expiresIn: process.env.JWT_EXPIRATION
-                    })
-                        
-                    const cookieOption = {
-                        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
-                        path: "/",
-                        httpOnly: true
-                    }
-        
-                    res.cookie("jwt", token, cookieOption);
-                    res.send({
-                        status: "ok",
-                        message: "usuario logueado",
-                        redirect: "/tareas" 
-                    })            
-                } else {
+        if (authUsuario == 'true') {
+            try {
+                let resultado = await LoginModelo.modeloValidarClave(correo);
+                let comparada = await bcryptjs.compare(clave, resultado);
+    
+                if (!resultado) {
                     return res.status(400).send({
                         status: "Error",
-                        message: "Clave invalida"
+                        message: "Correo no existe"
                     })
+                } else {
+                    if (comparada) {
+                        const token = jsonwebtoken.sign({ correo:correo },
+                            process.env.JWT_SECRET, {
+                            expiresIn: process.env.JWT_EXPIRATION
+                        })
+                            
+                        const cookieOption = {
+                            expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+                            path: "/",
+                            httpOnly: true
+                        }
+            
+                        res.cookie("jwt", token, cookieOption);
+                        res.send({
+                            status: "ok",
+                            message: "usuario logueado",
+                            redirect: "/tareas" 
+                        })            
+                    } else {
+                        return res.status(400).send({
+                            status: "Error",
+                            message: "Clave invalida"
+                        })
+                    }
                 }
+            } catch (error) {
+                return res.status(400).send({
+                    status: "Error",
+                    message: "Mal inicio de sesion"
+                })
             }
-        } catch (error) {
+        } else {
             return res.status(400).send({
                 status: "Error",
-                message: "Mal inicio de sesion"
+                message: "Usuario no verificado"
             })
         }
-
-
-
-
     }
 }
 
@@ -144,7 +261,6 @@ export class tareasControlador {
 
         let resultado = await tareasModelo.registrarNuevaTarea(tarea, idUsuario);        
         if (resultado) {
-            console.log('Tarea Guardada');
             return res.status(201).send({
                 status: 'ok'
             })

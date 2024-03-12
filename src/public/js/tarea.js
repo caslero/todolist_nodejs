@@ -14,6 +14,9 @@ let editarTarea = document.querySelector(".checkear");
 let confirmarModal = document.querySelector(".confirmarModal");
 let barraProgreso = document.getElementById("barraProgreso");
 let ocultarTarea = document.querySelector(".barraProgresos");
+let cambioClave = document.getElementById('cambioClave');
+let mensajeClaves = document.getElementById('mensajeClaves');
+let cambiarClave = document.getElementById('cambiarClave');
 
 let limite = 3;
 let pagina = 1;
@@ -36,7 +39,96 @@ borrarT.addEventListener("click", eliminarListaCompleta);
 borrarMarcados.addEventListener("click", eliminarMarcados);
 sinCheckear.addEventListener("click", cambiarEstadoTarea);
 editarTarea.addEventListener("click", actualizarTareas);
+cambiarClave.addEventListener('click', mostrarCambiarClave)
+cambioClave.addEventListener('submit', claveCambiada);
 
+
+async function mostrarCambiarClave(e) {
+  e.preventDefault();
+  let modalConfirmado = document.getElementById("modalConfirmar");
+  let modalConfirmar1 = document.getElementById("modalConfirmar1");
+  let modalConfirmar2 = document.getElementById("modalConfirmar2");
+  let menufiltrado = document.getElementById("menufiltrado");
+  let medio = document.getElementById("medio");
+  let medio2 = document.getElementById("medio2");
+
+  menufiltrado.classList.add("hidden");
+  medio.classList.add("hidden");
+  medio2.classList.remove("hidden");
+  modalConfirmar1.classList.add("w-[100%]");
+  modalConfirmar2.classList.add("w-[100%]");
+  modalConfirmar2.classList.add("right-0");
+  body.classList.add("overflow-y-hidden");
+
+
+  //modalConfirmado.innerHTML = `  `;
+ 
+}
+
+async function claveCambiada(e) {
+  e.preventDefault()
+  const claveVieja = e.target.claveVieja.value;
+  const claveNueva = e.target.claveNueva.value;
+  const claveNuevaConfirmar = e.target.claveNuevaConfirmar.value;
+  console.log(claveVieja);
+  console.log(claveNueva);
+  console.log(claveNuevaConfirmar);
+
+  const respuesta = await fetch('http://localhost:3000/api/cambiar-clave', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      claveVieja,
+      claveNueva,
+      claveNuevaConfirmar
+    })
+  })
+
+  const respuestaJson = await respuesta.json();
+  const respuestaClave = respuestaJson.status;
+  const mensaje = respuestaJson.message;
+
+  if (respuestaClave == 'error') {
+    mostrarMensajeClave(mensaje)
+  } else {
+    mostrarMensajeClave(mensaje)
+  }  
+  document.getElementById('claveVieja').value = '';
+  document.getElementById('claveNueva').value = '';
+  document.getElementById('claveNuevaConfirmar').value = '';
+  if (respuestaJson.redirect) {
+    window.location.href = respuestaJson.redirect;
+  }
+}
+
+function mostrarMensajeClave(mensaje) {
+  if (mensaje == 'Clave cambiada') {
+    mensajeClaves.classList.remove('hidden')
+    mensajeClaves.innerHTML = 'Clave cambiada con exito'
+    toggleMensajes()
+    window.location = '/tareas'
+  } else if (mensaje == 'Clave incorrecta') {
+    mensajeClaves.classList.remove('hidden')
+    mensajeClaves.innerHTML = 'Clave incorrecta'
+    toggleMensajes()
+  } else if (mensaje == 'Claves no coinciden') {
+    mensajeClaves.classList.remove('hidden')
+    mensajeClaves.innerHTML = 'Claves no coinciden'
+    toggleMensajes()
+  } else if (mensaje == 'Campos vacios') {
+    mensajeClaves.classList.remove('hidden')
+    mensajeClaves.innerHTML = 'Uno o varios campos vacios'
+    toggleMensajes()
+  }  
+}
+
+async function toggleMensajes() {
+  setTimeout(() => {
+    mensajeClaves.classList.add("hidden");
+  }, "3000");
+}
 
 async function nuevaTarea(e) {
   e.preventDefault();
@@ -567,6 +659,7 @@ async function eliminarElementos(e) {
   let modalConfirmar2 = document.getElementById("modalConfirmar2");
   let menufiltrado = document.getElementById("menufiltrado");
   let medio = document.getElementById("medio");
+  let medio2 = document.getElementById("medio2");
 
   const borrarUnaTarea = e.target.closest(".js-delete");
 
@@ -575,6 +668,7 @@ async function eliminarElementos(e) {
 
   menufiltrado.classList.add("hidden");
   medio.classList.remove("subModalConfirmar");
+  medio2.classList.add("hidden");
   modalConfirmar1.classList.add("w-[100%]");
   modalConfirmar2.classList.add("w-[100%]");
   modalConfirmar2.classList.add("right-0");
@@ -628,6 +722,7 @@ async function eliminarListaCompleta(e) {
   let modalConfirmar2 = document.getElementById("modalConfirmar2");
   let menufiltrado = document.getElementById("menufiltrado");
   let medio = document.getElementById("medio");
+  let medio2 = document.getElementById("medio2");  
   let id = 0;
   const borrarTodasTarea = e.target.closest(".borrado");
 
@@ -635,6 +730,7 @@ async function eliminarListaCompleta(e) {
 
   menufiltrado.classList.add("hidden");
   medio.classList.remove("subModalConfirmar");
+  medio2.classList.add("hidden");
   modalConfirmar1.classList.add("w-[100%]");
   modalConfirmar2.classList.add("w-[100%]");
   modalConfirmar2.classList.add("right-0");
@@ -683,12 +779,14 @@ async function eliminarMarcados(e) {
   let modalConfirmar2 = document.getElementById("modalConfirmar2");
   let menufiltrado = document.getElementById("menufiltrado");
   let medio = document.getElementById("medio");
+  let medio2 = document.getElementById("medio2");  
   let id = 0;
   const borrarMarcado = e.target.closest(".marcado");
 
   if (!borrarMarcado) return;
   menufiltrado.classList.add("hidden");
   medio.classList.remove("subModalConfirmar");
+  medio2.classList.add("hidden");
   modalConfirmar1.classList.add("w-[100%]");
   modalConfirmar2.classList.add("w-[100%]");
   modalConfirmar2.classList.add("right-0");

@@ -48,7 +48,15 @@ async function mensajesValidacion(mensaje) {
     toggleCuadroMensajes()
     divMsj.innerHTML = `<div class="text-[20px]">Minimo 5 caractres en la clave</div>`;
     toggleMensajes();
-  }
+  } else if (mensaje == 'Usuario no verificado') {
+    toggleCuadroMensajes()
+    divMsj.innerHTML = `<div class="text-[20px]">Validar Usuario, revise su correo</div>`;
+    toggleMensajes();
+  } else if (mensaje == 'Usuario no registrado') {
+    toggleCuadroMensajes()
+    divMsj.innerHTML = `<div class="text-[20px]">No existe el usuario</div>`;
+    toggleMensajes();
+  }  
 }
 
 async function toggleMensajes() {
