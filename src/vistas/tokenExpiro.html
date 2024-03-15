@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link type="image/x-icon" href="/img/favicon.ico" rel="shortcut icon" />
     <title>Tareas</title>
-    <link rel="stylesheet" href="css/tarea.css" />
+    <link rel="stylesheet" href="css/index.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link
@@ -15,9 +15,13 @@
     <script src="js/tokenExpiro.js" defer></script>
   </head>
   <body id="body">
-    <section>
-        <h1>Su token expiro</h1>
-        <a href="/login">Login</a>
+    <section class="container mx-auto xl:px-28 px-4 pt-10 w-screen h-[500px] flex items-center justify-center">
+      <div class="space-y-4 flex flex-col items-center w-full max-w-[700px] h-full">
+        <h1 class="w-full text-[#8f7ad7] text-4xl text-center sm:text-5xl tracking-[6px] sm:tracking-[10px] font-[700]">
+          Lo sentimos su token expiro
+        </h1>
+        <a id="salir" class="btn-index" href="/login">Cerrar</a>
+      </div>
     </section>
   </body>
 </html>

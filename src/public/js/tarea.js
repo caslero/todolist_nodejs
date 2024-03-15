@@ -17,6 +17,7 @@ let ocultarTarea = document.querySelector(".barraProgresos");
 let cambioClave = document.getElementById('cambioClave');
 let mensajeClaves = document.getElementById('mensajeClaves');
 let cambiarClave = document.getElementById('cambiarClave');
+let cancelarClave = document.getElementById('cancelarClave');
 
 let limite = 3;
 let pagina = 1;
@@ -41,7 +42,7 @@ sinCheckear.addEventListener("click", cambiarEstadoTarea);
 editarTarea.addEventListener("click", actualizarTareas);
 cambiarClave.addEventListener('click', mostrarCambiarClave)
 cambioClave.addEventListener('submit', claveCambiada);
-
+cancelarClave.addEventListener('click', cancelarCambioClave)
 
 async function mostrarCambiarClave(e) {
   e.preventDefault();
@@ -65,14 +66,22 @@ async function mostrarCambiarClave(e) {
  
 }
 
+async function cancelarCambioClave() {
+  let modalConfirmar1 = document.getElementById("modalConfirmar1");
+  let modalConfirmar2 = document.getElementById("modalConfirmar2");
+  let medio2 = document.getElementById("medio2");
+
+  modalConfirmar1.classList.remove("w-[100%]");
+  modalConfirmar2.classList.remove("w-[100%]");
+  modalConfirmar2.classList.remove("right-0");
+  medio2.classList.add("hidden");
+}
+
 async function claveCambiada(e) {
   e.preventDefault()
   const claveVieja = e.target.claveVieja.value;
   const claveNueva = e.target.claveNueva.value;
   const claveNuevaConfirmar = e.target.claveNuevaConfirmar.value;
-  console.log(claveVieja);
-  console.log(claveNueva);
-  console.log(claveNuevaConfirmar);
 
   const respuesta = await fetch('http://localhost:3000/api/cambiar-clave', {
     method: 'POST',
@@ -120,6 +129,10 @@ function mostrarMensajeClave(mensaje) {
   } else if (mensaje == 'Campos vacios') {
     mensajeClaves.classList.remove('hidden')
     mensajeClaves.innerHTML = 'Uno o varios campos vacios'
+    toggleMensajes()
+  } else if (mensaje == 'Entre 5 y 16 caracteres') {
+    mensajeClaves.classList.remove('hidden')
+    mensajeClaves.innerHTML = `Ingrese entre 5 y 16 caracteres`
     toggleMensajes()
   }  
 }

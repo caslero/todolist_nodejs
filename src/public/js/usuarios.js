@@ -42,9 +42,9 @@ async function mensajesValidacion(mensaje) {
     toggleCuadroMensajes()
     divMsj.innerHTML = `<div class="text-[20px]">Usuario Existente</div>`;
     toggleMensajes();
-  } else if (mensaje == 'Minimo 5 caracteres') {
+  } else if (mensaje == 'Entre 5 y 16 caracteres') {
     toggleCuadroMensajes()
-    divMsj.innerHTML = `<div class="text-[20px]">Minimo 5 caractres en la clave</div>`;
+    divMsj.innerHTML = `<div class="text-[20px]">Minimo 5 caractres, maximo 16 caracteres</div>`;
     toggleMensajes();
   } else if (mensaje == 'Claves diferentes') {
     toggleCuadroMensajes()

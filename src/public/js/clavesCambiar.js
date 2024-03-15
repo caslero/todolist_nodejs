@@ -44,6 +44,10 @@ async function mensajesValidacion(mensaje) {
       msj.classList.remove('hidden');
       msj.innerHTML = `Las claves no coinciden`;
       toggleMensajes()
+    } else if (mensaje == 'Entre 5 y 16 caracteres') {
+      msj.classList.remove('hidden');
+      msj.innerHTML = `Ingrese entre 5 y 16 caracteres`;
+      toggleMensajes();
     } else {
       msj.classList.remove('hidden');
       msj.innerHTML = `Clave cambiada con exito`;
@@ -59,6 +63,6 @@ async function toggleMensajes() {
 
 async function cambiada() {
     setTimeout(() => {
-        window.location = '/login'
+        window.close();
     }, "5000");
 }

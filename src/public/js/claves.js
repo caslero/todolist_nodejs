@@ -7,9 +7,6 @@ enviarCorreo.addEventListener('submit', cambiarClave);
 async function cambiarClave(e) {
   e.preventDefault();
   const correo = e.target.correo.value;
-
-  console.log(correo);
-  
   const respuesta = await fetch('http://localhost:3000/api/cambiar-clave-token', {
     method: 'POST',
     headers: {
@@ -43,7 +40,9 @@ async function mensajesValidacion(mensaje) {
     msj.classList.remove('hidden');
     msj.innerHTML = `Correo enviado`;
     toggleMensajes()
-    //window.location = '/login'
+    setTimeout(() => {
+      window.location = '/login'
+    }, "4000");
   }
 }
 
