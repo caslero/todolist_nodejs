@@ -1,22 +1,28 @@
+#Inicio de las variables para la conexion a la base de datos 
 SERVIDOR = 
 USUARIO = 
 PASSWORD = 
 BD = 
+#Fin de las variables para la conexion a la base de datos 
 
+#PUERTO es elnuero de puerto que se ejecuta el servidor
 PUERTO = 
 
+#Inicio. Estas variables contienen las rutas de la vista a mostrar, esto con la
+#finalidad de hacerlo facil de adaptar en cualquier sitio
 INDEX = 
 REGISTRAR_USUARIO = 
-GUARDAR_USUARIO = 
-
 LOGIN_USUARIO = 
 CAMBIAR_CLAVE = 
 LISTA_TAREAS = 
 CLAVE_CAMBIADA = 
 TOKEN_EXPIRO = 
-
 VALIDAR = 
+#Fin. Estas variables contienen las rutas de la vista a mostrar, esto con la
+#finalidad de hacerlo facil de adaptar en cualquier sitio
 
+#Inicio. Estas variables se utilizan para generar el token de inicio de sesion
 JWT_SECRET = 
 JWT_EXPIRATION = 
 JWT_COOKIE_EXPIRES = 
+#Fin. Estas variables se utilizan para generar el token de inicio de sesion
