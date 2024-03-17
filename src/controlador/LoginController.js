@@ -7,7 +7,9 @@ import { sendMail } from "../config/emailer.js";
 /** La clase LoginController se encarga de analizar las diferentes peticiones que
   deben cumplirse para que un usuario pueda iniciar sesion correctamente */
 export class LoginControlador {
-    static async postLogin(req, res) {
+  /** postLogin sen encarga de responder la petision para iniciar sesion en caso
+    de cumplirse todas las condiciones */
+  static async postLogin(req, res) {
       const correo = req.body.correo;
       const clave = req.body.clave;
   
@@ -95,5 +97,5 @@ export class LoginControlador {
           message: "Usuario no verificado",
         });
       }
-    }
+  }
 }

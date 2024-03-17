@@ -23,14 +23,14 @@ export function idUsuarioActivo(correo) {
 /** La funcion tareasDescendentes se encarga de traernos todas las tareas de
     un determinado usuario en orden descendente */
 export function tareasDescendentes(id) {
-    let tareaDescendente = `SELECT id, tarea, estatus, clase FROM tareas WHERE id_usuario = '${id}' order by tarea desc`;
+    let tareaDescendente = `SELECT * FROM tareas WHERE id_usuario = '${id}' order by tarea desc`; 
     return tareaDescendente;
 }
 
 /** La funcion tareasAscendentes se encarga de traernos todas las tareas de
     un determinado usuario en orden descendente */
 export function tareasAscendentes(id) {
-    let tareaAscendente = `SELECT id, tarea, estatus, clase FROM tareas WHERE id_usuario = '${id}' order by tarea asc`;
+    let tareaAscendente = `SELECT * FROM tareas WHERE id_usuario = '${id}' order by tarea asc`; 
     return tareaAscendente;
 }
 
@@ -57,13 +57,13 @@ export function eliminarTareasMarcadas(correo) {
 
 /** La funcion cambiarEstatusClaseTarea se encarga de cambiar el status y clase
     de una tarea determinada */
-export function cambiarEstatusClaseTarea(status, clase, id) {
+export function cambiarEstatusClaseTarea(id, status, clase) {
     let updateEstatusClaseTarea = `UPDATE tareas SET estatus = '${status}', clase = '${clase}' WHERE id = '${id}'`;
     return updateEstatusClaseTarea;
 }
 
 /** La funcion actualizarTarea se encarga de cambiar el nombre de la tarea */
-export function actualizarTarea(tarea, id) {
+export function actualizarTarea(id, tarea) {
     let updateTarea = `UPDATE tareas SET tarea = '${tarea}' WHERE id = '${id}'`;
     return updateTarea;
 }

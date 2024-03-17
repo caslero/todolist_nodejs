@@ -256,6 +256,9 @@ async function nuevaTareaGuardada(tarea) {
           if (tareas.advertencia != 'sin tareas') {
             todos = tareas.tareasAscendentes;
 
+            if (!todos) {
+              location.reload();
+            }
             const tareasTotales = todos.length;
             let cantidadPaginas = tareasTotales / limite;
             let x = Math.ceil(cantidadPaginas);
@@ -286,7 +289,9 @@ async function nuevaTareaGuardada(tarea) {
 
           if (tareas.advertencia != 'sin tareas') {
             todos = tareas.tareasAscendentes;
-
+            if (!todos) {
+              location.reload();
+            }
             const tareasTotales = todos.length;
             let cantidadPaginas = tareasTotales / limite;
             let x = Math.ceil(cantidadPaginas);

@@ -12,9 +12,9 @@ let transporte = nodemailer.createTransport({
   host: "sandbox.smtp.mailtrap.io",
   port: 2525,
   auth: {
-    user: "4ef597f28ac05b",
-    pass: "d9cdb7750fec17",
-  },
+    user: "e71d5aa8088a92",
+    pass: "3a1f59c9aee1ef"
+  }
 });
 
 /** La function senMail es la encargada de enviar el token para validar el usuario
@@ -27,7 +27,7 @@ export const sendMail = async (correo, nombre, validarUsuario) => {
     html: `${htmlEmail(validarUsuario)}`,
   });
   return info;
-};
+}; 
 
 /** La function senMailCambiarClave es la encargada de enviar el token para cambiar
     la clave del usuario */

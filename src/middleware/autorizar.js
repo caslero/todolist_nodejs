@@ -1,13 +1,17 @@
-
 import jsonwebtoken from "jsonwebtoken";
 import { UsuarioModelo } from "../modelo/UsuarioModelo.js";
 import { LoginModelo } from "../modelo/LoginModelo.js";
 import { TokensModelos } from "../modelo/TokenModelo.js";
 
+/** AdminUsuario son middleware que se encarga de validar cierta informacion antes
+  de pasen a la sigiente peticion */
 export class AdminUsuario {
+  /** revisarCookie se encarga de que si un usuario no ha iniciado sesion no pueda
+    entrar a la ruta de tareas */
   static async revisarCookie(req, res, next) {
+    const cookie = req.headers.cookie;
     try {
-      const cookieJWT = req.headers.cookie.split("; ").find((cookie) => cookie.startsWith("jwt=")).slice(4);
+      const cookieJWT = cookie.split("; ").find((cookie) => cookie.startsWith("jwt=")).slice(4);
       const decodificada = jsonwebtoken.verify(
         cookieJWT,
         process.env.JWT_SECRET
@@ -26,6 +30,8 @@ export class AdminUsuario {
     }
   }
 
+  /** usuarioRepetido se encarga de validar si el nuevo usuario a registrarse no se
+    se encuentre registrado */
   static async usuarioRepetido(req, res, next) {
     const correo = req.body.correo;
     try {
@@ -33,7 +39,7 @@ export class AdminUsuario {
       if (resultado) {
         return res.status(400).send({
           status: "Error",
-          message: "Correo usado"
+          message: "Correo usado",
         });
       } else {
         return next();
@@ -42,12 +48,13 @@ export class AdminUsuario {
       return res.status(400).send({
         status: "Error",
         message: "Revisando si el usuario se repite",
-        error: error
+        error: error,
       });
     }
   }
 
-  //Este metodo es para validar el link enviado al correo
+  /** validarUsuarioToken es para validar el link enviado al correo para saber
+    si es autentico o no */
   static async validarUsuarioToken(req, res, next) {
     const url = req.url;
     const parts = url.split("/");
@@ -67,11 +74,13 @@ export class AdminUsuario {
     } else {
       return res.status(400).send({
         status: "Error",
-        message: "Fallo al autenticar"
+        message: "Fallo al autenticar",
       });
     }
   }
 
+  /** usuarioNoRegistrado se encarga de validar si el usuario existe para poder
+    hacer login */
   static async usuarioNoRegistrado(req, res, next) {
     const correo = req.body.correo;
     try {
@@ -81,31 +90,45 @@ export class AdminUsuario {
       } else {
         return res.status(400).send({
           status: "Error",
-          message: "Usuario no registrado"
+          message: "Usuario no registrado",
         });
       }
     } catch (error) {
       return res.status(400).send({
         status: "Error",
-        message: "Usuario no existe"
+        message: "Usuario no existe",
       });
     }
   }
 
+  /** confirmarUsuarioExistente confirma si existe el usuario y si ya se valido
+    mediante el correo para poder enviar el token de cambio de clave */
   static async confirmarUsuarioExiste(req, res, next) {
     const correo = req.body.correo;
     let resultado = await UsuarioModelo.cambiarUsuarioClaveToken(correo);
+    let resultado2 = await UsuarioModelo.usuarioAutenticado(correo);
+    let autenticar = '';
 
     if (resultado) {
-      return next();
+      autenticar = resultado2[0].autenticar;
+      if (autenticar == 'true') {
+        return next();
+      } else {
+        return res.status(400).send({
+          status: "Error",
+          message: "Usuario no validado",
+        });
+      }      
     } else {
       return res.status(400).send({
         status: "Error",
-        message: "Usuario no registrado"
+        message: "Usuario no registrado",
       });
     }
   }
 
+  /** cambioClaveUsuario se encarga de validar el token que haya y no haya expirado
+    para poder cambiar la clave */
   static async cambioClaveUsuario(req, res, next) {
     const url = req.url;
     const parts = url.split("/");

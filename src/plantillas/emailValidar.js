@@ -1,5 +1,6 @@
 
-
+/** htmlEmail es una plantilla html que es un diseño para el correo que le llegara
+    al usuario para validarse, esto incluye el link que debe clickear */
 export const htmlEmail = (validarUsuario) => {
     const html = `
 <!DOCTYPE html>
@@ -26,7 +27,9 @@ export const htmlEmail = (validarUsuario) => {
     return html;
 }
 
-
+/** htmlEmailCambiarClave es una plantilla html que es un diseño para el correo que
+    le llegara al usuario para cambiar su clave de acceso al sistema, esto incluye
+    el link que debe clickear */
 export const htmlEmailCambiarClave = (validarUsuario) => {
     const html = `
 <!DOCTYPE html>

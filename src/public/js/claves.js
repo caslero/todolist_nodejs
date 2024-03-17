@@ -43,6 +43,13 @@ async function mensajesValidacion(mensaje) {
     setTimeout(() => {
       window.location = '/login'
     }, "4000");
+  } else if (mensaje == 'Usuario no validado') {
+    msj.classList.remove('hidden');
+    msj.innerHTML = `Validar usuario antes de cambiar clave`;
+    toggleMensajes();
+    setTimeout(() => {
+      window.location = '/login'
+    }, "4000");
   }
 }
 
@@ -51,3 +58,5 @@ async function toggleMensajes() {
     msj.classList.add("hidden");
   }, "4000");
 }
+
+

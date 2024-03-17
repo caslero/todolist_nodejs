@@ -58,7 +58,7 @@ async function mensajesValidacion(mensaje) {
     toggleCuadroMensajes()
     divMsj.innerHTML = `<div class="text-[20px]">Campo de clave vacio</div>`;
     toggleMensajes();
-  }  
+  }
 }
 
 async function toggleMensajes() {

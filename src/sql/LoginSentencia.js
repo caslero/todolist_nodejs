@@ -35,7 +35,3 @@ export function reenviarToken(correo) {
     let renviarToken = `SELECT validarUsuario FROM usuario WHERE correo = '${correo}'`;
     return renviarToken;
 }
-
-
-
-

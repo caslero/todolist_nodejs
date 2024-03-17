@@ -1,5 +1,5 @@
 import { conexion } from "../db/database.js";
-import { guardarUsuario, existeUsuario, verClave, updateClave, obtenerIdUsuario, guardarTokenCambioClaves} from "../sql/UsuarioSentencia.js";
+import { guardarUsuario, existeUsuario, verClave, updateClave, obtenerIdUsuario, guardarTokenCambioClaves, usuarioEstaValidado } from "../sql/UsuarioSentencia.js";
 export class UsuarioModelo {
     static async registrarNuevoUsuario(nombre, correo, clave, validarUsuario) {
         const falso = 'false';
@@ -75,6 +75,19 @@ export class UsuarioModelo {
             conexion.query(existeUsuario(correo), function (error, resultado) {
                 if (resultado.length >= 1) {
                     resolve(true);                
+                } else {
+                    resolve(false)
+                }                          
+            })
+        })
+    }
+
+    static async usuarioAutenticado(correo){
+        return new Promise (resolve => {
+            //let verUsuario = `SELECT nombre FROM usuario WHERE correo = '${correo}'`;            
+            conexion.query(usuarioEstaValidado(correo), function (error, resultado) {
+                if (resultado.length != 0) {
+                    resolve(resultado);                
                 } else {
                     resolve(false)
                 }                          

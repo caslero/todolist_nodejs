@@ -11,14 +11,21 @@ export function guardarUsuario(nombre, correo, clave, validarUsuario, falso) {
 /** La funcion existeUsuario se encarga de traernos el nombre de usuario en caso
     de que el usuario exista */
 export function existeUsuario(correo) {
-    let existeElUsuario = `SELECT nombre FROM usuario where correo = '${correo}'`;   
+    let existeElUsuario = `SELECT nombre FROM usuario WHERE correo = '${correo}'`;   
     return existeElUsuario;
+}
+
+/** La funcion usuarioEstaValidado se encarga de traernos el autenticar de
+    usuario en caso de que el usuario exista */
+export function usuarioEstaValidado(correo) {
+    let usuarioValidado = `SELECT autenticar FROM usuario WHERE correo = '${correo}'`;   
+    return usuarioValidado;
 }
 
 /** La funcion verClave consulta la BD, extrae la clave del usuario, esto con
     la finalidad de cambiar la clave desde una clave ya existente */
 export function verClave(correo) {
-    let mostrarClave = `SELECT clave FROM usuario where correo = '${correo}'`;  
+    let mostrarClave = `SELECT clave FROM usuario WHERE correo = '${correo}'`;  
     return mostrarClave;
 }
 

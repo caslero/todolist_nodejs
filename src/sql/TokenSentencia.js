@@ -4,7 +4,7 @@
 /** La funcion tokenCambiarClave se encarga de traernos el id del usuario que
     solicito el token para cambiar la clave */
 export function tokenCambiarClave(token) {
-    let tokenCambioClave = `SELECT id_usuario FROM tokens WHERE token = '${token}'`
+    let tokenCambioClave = `SELECT id_usuario FROM tokens WHERE token = '${token}'`;
     return tokenCambioClave;
 }
 
@@ -15,7 +15,7 @@ export function tokenValido(id) {
 }
 
 /** La funcion claveCambiada se encarga de cambiar la clave del usuario */
-export function claveCambiada(claveN, id) {
+export function claveCambiadaExitosa(claveN, id) {
     let updateClave = `UPDATE usuario SET clave = '${claveN}' WHERE id = '${id}'`;
     return updateClave;
 }

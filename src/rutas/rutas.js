@@ -46,7 +46,7 @@ rutas.get('/tareas', AdminUsuario.revisarCookie,  (req, res) => {
   res.sendFile(__dirname + process.env.LISTA_TAREAS)
 });
 
-rutas.get('/tareas/todas/descendentes', TareaControlador.mostrarTodasTareasDescendente)
+rutas.get('/tareas/todas/descendentes', AdminUsuario.revisarCookie, TareaControlador.mostrarTodasTareasDescendente)
 rutas.get('/tareas/todas/ascendentes', TareaControlador.mostrarTodasTareasAscendente)
 rutas.get('/usuario_activo', TareaControlador.mostrarUsuarioActivo);
 
