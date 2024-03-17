@@ -1,9 +1,11 @@
-
+/** enviarCorreo recibe el correo a enviar para cambiar la clave */
 let enviarCorreo = document.getElementById('cambioClave');
 let msj = document.getElementById("mensajeClaves");
 
 enviarCorreo.addEventListener('submit', cambiarClave);
 
+/** cambiarClave es la funcion escargada de enviar el correo a cambiar y recibe
+  una respuesta tanto si se envia el correo o si da un error */
 async function cambiarClave(e) {
   e.preventDefault();
   const correo = e.target.correo.value;
@@ -31,6 +33,8 @@ async function cambiarClave(e) {
   }
 }
 
+/** mensajesValidacion recibe la respuesta del cambio de clave y muestra el msj
+  correspondiente a la repuesta */
 async function mensajesValidacion(mensaje) {
   if (mensaje == 'Usuario no registrado') {
     msj.classList.remove('hidden');
@@ -53,6 +57,7 @@ async function mensajesValidacion(mensaje) {
   }
 }
 
+/** toggleMensajes se encarga de ocultar el msj de la respuesta */
 async function toggleMensajes() {
   setTimeout(() => {
     msj.classList.add("hidden");

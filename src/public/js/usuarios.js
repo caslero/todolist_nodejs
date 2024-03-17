@@ -1,10 +1,14 @@
+/** registroUsuarios recibe los datos del formulario para hacer guardar un nuevo usuario */
 let registroUsuarios = document.getElementById("registrar");
-let msjUsuario = document.getElementById("registroExitosoUsuario");
+/** msj muestra los msj de advertencia al intentar hacer login */
 let msj = document.getElementById("validar");
+/** divMsj imprime los msj */
 let divMsj = document.getElementById("validar");
 
 registroUsuarios.addEventListener("submit", registrar);
 
+/** registrar se encarga de enviar los datos para guardar un nuevo usuario y recibe
+  la respuesta de lo que sucede */
 async function registrar(e) {
   e.preventDefault();  
   const nombre = e.target.nombre.value;
@@ -37,6 +41,8 @@ async function registrar(e) {
   }
 }
 
+/** mensajesValidacion recibe la respuesta del guardado del nuevo usuario y muestra
+  el msj correspondiente a la repuesta */
 async function mensajesValidacion(mensaje) {
   if (mensaje == 'Correo usado') {
     toggleCuadroMensajes()
@@ -61,6 +67,7 @@ async function mensajesValidacion(mensaje) {
   }
 }
 
+/** toggleMensajes oculta los mensajes de validacion */
 async function toggleMensajes() {
   setTimeout(() => {
     msj.classList.remove("mostrarMsjValidacion");
@@ -69,6 +76,7 @@ async function toggleMensajes() {
   }, "3000");
 }
 
+/** toggleMensajes oculta o muestra el cuadro de validacion */
 async function toggleCuadroMensajes() {
   msj.classList.remove("ocultarMsjValidacion");
   msj.classList.add("mostrarMsjValidacion");

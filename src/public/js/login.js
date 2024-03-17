@@ -1,11 +1,14 @@
-
+/** entrarAlSistema recibe los datos del formulario para hacer login */
 let entrarAlSistema = document.getElementById('login');
-let msjUsuario = document.getElementById("registroExitosoUsuario");
+//let msjUsuario = document.getElementById("registroExitosoUsuario");
+/** msj muestra los msj de advertencia al intentar hacer login */
 let msj = document.getElementById("validar");
+/** divMsj imprime los msj */
 let divMsj = document.getElementById("validar");
 
 entrarAlSistema.addEventListener('submit', login);
 
+/** login envia los datos correspondientes para iniciar sesion */
 async function login(e) {
   e.preventDefault();
   const correo = e.target.correo.value;
@@ -35,6 +38,7 @@ async function login(e) {
   }
 }
 
+/** mensajesValidacion recibe los mensajes al iniciar sesion y muestra la respuesta */
 async function mensajesValidacion(mensaje) {
   if (mensaje == 'Clave invalida') {
     toggleCuadroMensajes()
@@ -59,6 +63,7 @@ async function mensajesValidacion(mensaje) {
   }  
 }
 
+/** toggleMensajes se encarga de ocultar el msj de la respuesta */
 async function toggleMensajes() {
   setTimeout(() => {
     msj.classList.remove("mostrarMsjValidacion");
@@ -67,6 +72,7 @@ async function toggleMensajes() {
   }, "3000");
 }
 
+/** toggleCuadroMensajes se encarga de ocultar el cuadro de los mensajes */
 async function toggleCuadroMensajes() {
   msj.classList.remove("ocultarMsjValidacion");
   msj.classList.add("mostrarMsjValidacion");

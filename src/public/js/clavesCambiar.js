@@ -1,9 +1,10 @@
-
+/** cambioClave recibe la nueva clave y la confirmacion de lanueva clave */
 let cambioClave = document.getElementById('cambioClave');
 let msj = document.getElementById('mensajeClaves');
 
 cambioClave.addEventListener('submit', claveCambiada);
 
+/** claveCambiada envia el token, la clave nueva y clave a confirmar */
 async function claveCambiada(e) {
     e.preventDefault();
     const url = window.location.href;
@@ -39,6 +40,8 @@ async function claveCambiada(e) {
     }    
 }
 
+/** mensajesValidacion recibe la respuesta del cambio de clave y muestra el msj
+  correspondiente a la repuesta */
 async function mensajesValidacion(mensaje) {
     if (mensaje == 'Claves no coinciden') {
       msj.classList.remove('hidden');
@@ -54,13 +57,15 @@ async function mensajesValidacion(mensaje) {
       cambiada();      
     }
 }
-  
+
+/** toggleMensajes se encarga de ocultar el msj de la respuesta */
 async function toggleMensajes() {
     setTimeout(() => {
       msj.classList.add("hidden");
     }, "5000");
 }
 
+/** cambiada se encarga de cerrar la ventana una vez guardada la nueva clave */
 async function cambiada() {
     setTimeout(() => {
         window.close();

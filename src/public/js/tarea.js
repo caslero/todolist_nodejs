@@ -44,9 +44,9 @@ cambiarClave.addEventListener('click', mostrarCambiarClave)
 cambioClave.addEventListener('submit', claveCambiada);
 cancelarClave.addEventListener('click', cancelarCambioClave)
 
+/** mostrarCambiarClave muestra la modal para el cambio de clave */
 async function mostrarCambiarClave(e) {
   e.preventDefault();
-  let modalConfirmado = document.getElementById("modalConfirmar");
   let modalConfirmar1 = document.getElementById("modalConfirmar1");
   let modalConfirmar2 = document.getElementById("modalConfirmar2");
   let menufiltrado = document.getElementById("menufiltrado");
@@ -59,13 +59,10 @@ async function mostrarCambiarClave(e) {
   modalConfirmar1.classList.add("w-[100%]");
   modalConfirmar2.classList.add("w-[100%]");
   modalConfirmar2.classList.add("right-0");
-  body.classList.add("overflow-y-hidden");
-
-
-  //modalConfirmado.innerHTML = `  `;
- 
+  body.classList.add("overflow-y-hidden"); 
 }
 
+/** cancelarCambioClave cancela el cambio de clave */
 async function cancelarCambioClave() {
   let modalConfirmar1 = document.getElementById("modalConfirmar1");
   let modalConfirmar2 = document.getElementById("modalConfirmar2");
@@ -77,6 +74,8 @@ async function cancelarCambioClave() {
   medio2.classList.add("hidden");
 }
 
+/** claveCambiada envia los datos de la clave vieja, la nueva clave y la nueva clave
+  confirmar para cambiar la clave, una vez se esta loggueado */
 async function claveCambiada(e) {
   e.preventDefault()
   const claveVieja = e.target.claveVieja.value;
@@ -112,6 +111,8 @@ async function claveCambiada(e) {
   }
 }
 
+/** mostrarMensajeClave recibe la respuesta del cambio de clave y muestra el msj
+  correspondiente a la repuesta */
 function mostrarMensajeClave(mensaje) {
   if (mensaje == 'Clave cambiada') {
     mensajeClaves.classList.remove('hidden')
@@ -137,12 +138,15 @@ function mostrarMensajeClave(mensaje) {
   }  
 }
 
+/** toggleMensajes oculta los mensajes de validacion */
 async function toggleMensajes() {
   setTimeout(() => {
     mensajeClaves.classList.add("hidden");
   }, "3000");
 }
 
+/** nuevaTarea se encarga de enviar los datos para guardar la nueva tarea y recibe la
+  respuesta de lo que sucede */
 async function nuevaTarea(e) {
   e.preventDefault();
   const tarea = e.target.tarea.value;
@@ -171,10 +175,12 @@ async function nuevaTarea(e) {
   }
 }
 
+/** logOut se encarga de cerrar la sesion */
 async function logOut() {
   document.location.href = "/cerrar_sesion"
 }
 
+/** menuSalir se encarga de mostrar u ocultar el boton para salir de la sesion */
 function menuSalir() {
   let mostrarMenu = document.getElementById("dropdown");
   mostrarMenu.classList.toggle("hidden");
@@ -183,11 +189,13 @@ function menuSalir() {
   }, 4000);
 }
 
+/** menuFiltradoTarea se encarga de mostrar y ocultar para buscar la tarea */
 function menuFiltradoTarea() {
   let menufiltrado = document.getElementById("menufiltrado");
   menufiltrado.classList.toggle("hidden");
 }
 
+/** document.addEventListener es el buscador en la lista de tareas */
 document.addEventListener("keyup", (e) => {
   let buscador = document.getElementById("ningunaTarea");
   let verdaderos = 0;
@@ -217,6 +225,7 @@ document.addEventListener("keyup", (e) => {
   }
 });
 
+/** fecha se encarga de mostrar la fecha actual */
 function fecha() {
   let today = new Date();
   let nDia = { weekday: "long" };
@@ -235,6 +244,7 @@ function fecha() {
   document.getElementById("year").innerHTML = yearActual;
 }
 
+/** ordenLista se escarga de poner la lista de tareas en ascendentes o descendentes */
 function ordenLista() {
   if (ascendente.innerHTML == "Ascendente") {
     document.getElementById("ordenando").innerHTML = "Descendente";
@@ -245,6 +255,7 @@ function ordenLista() {
   }
 }
 
+/** nuevaTareaGuardada se encarga de reiniciar las tareas y mostrar el nuevo proceso */
 async function nuevaTareaGuardada(tarea) {
   let todos = [];
   if (tarea) {    
@@ -317,6 +328,7 @@ async function nuevaTareaGuardada(tarea) {
   }
 }
 
+/** mostrarTareas se encarga de mostrar todas las tareas que tenga el usuario loggueado */
 async function mostrarTareas(){
   let ascendente = document.getElementById("ordenando");
   let orden = ascendente.innerHTML;
@@ -734,6 +746,7 @@ async function eliminarElementos(e) {
   });
 }
 
+/** La funcion eliminarListaCompleta se encarga de eliminar todas las tareas */
 async function eliminarListaCompleta(e) {
   let modalConfirmado = document.getElementById("modalConfirmar");
   let modalConfirmar1 = document.getElementById("modalConfirmar1");
@@ -955,12 +968,13 @@ function barraDeProgreso() {
   }
 }
 
+/** observador se encarga de mostrar todos los procesos que se ejecutan en la vista
+  tareas */
 async function observador() {
   const respuestaUsuario = await fetch(`http://localhost:3000/usuario_activo`)
   const datosUsuario = await respuestaUsuario.json();
   const usuarioActivo = datosUsuario.nombre;
-  document.getElementById('nombreUsua').innerHTML = `${usuarioActivo}`;
-  
+  document.getElementById('nombreUsua').innerHTML = `${usuarioActivo}`;  
   fecha();
   mostrarTareas()
 }
